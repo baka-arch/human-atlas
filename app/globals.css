@@ -86,3 +86,97 @@ h1 .edition{font-family:inherit;font-weight:500;font-size:10px;letter-spacing:.0
 @media(max-width:767px){body:has(.detail-sheet) .view-controls{visibility:hidden}}
 
 @media(max-height:600px) and (orientation:landscape){body:has(.detail-sheet) .bottom-dock{left:12px;right:324px;width:auto;transform:none;max-width:none;margin:0}}
+
+/* BHMS clinical companion */
+.identity-sub{font-size:12px;color:#7c8793;letter-spacing:.02em;margin-top:-3px}
+.detail-tabs{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px}
+.detail-tab-list{width:100%;background:#18253608;border-radius:8px;padding:3px;height:34px}
+.detail-tab-list [data-slot=tabs-trigger]{font-size:11.5px;border-radius:6px;min-height:28px}
+.detail-tabs [data-slot=tabs-content]{flex:1;min-height:0;display:flex;flex-direction:column}
+.clinical-scroll{gap:10px}
+.clinical-intro{display:flex;flex-direction:column;gap:9px}
+.clinical-intro p{font-size:11.5px;line-height:1.6;color:#78838f;margin:0}
+.clinical-grade{font-size:10px;letter-spacing:.08em;align-self:flex-start}
+.clinical-panel{display:flex;flex-direction:column;gap:10px;padding-top:2px}
+.clinical-disease{display:flex;align-items:baseline;gap:9px;font-weight:500;font-size:13px;color:#2b3a47}
+.clinical-index{font-size:10px;color:#93a0ab;font-variant-numeric:tabular-nums}
+.clinical-summary{font-size:12.5px;line-height:1.65;color:#66727f;margin:0 0 12px}
+.remedy-list{display:flex;flex-direction:column;gap:9px}
+.remedy-card{border:1px solid #18253614;border-left:3px solid #458a85;border-radius:7px;padding:11px 12px;background:#458a8508}
+.remedy-head{display:flex;align-items:center;gap:7px;color:#2b3a47;margin-bottom:8px}
+.remedy-head svg{color:#458a85}
+.remedy-head h4{font-size:13px;font-weight:600;margin:0}
+.remedy-keynotes{margin:0;padding-left:16px;display:flex;flex-direction:column;gap:4px}
+.remedy-keynotes li{font-size:11.5px;line-height:1.55;color:#5b6874}
+.remedy-modalities{font-size:11px;line-height:1.55;color:#7b8793;margin:9px 0 0;padding-top:7px;border-top:1px dashed #1825361c}
+.remedy-modalities span{font-weight:600;color:#458a85;text-transform:uppercase;letter-spacing:.06em;font-size:9.5px;display:block;margin-bottom:3px}
+.clinical-foot{display:flex;align-items:center;gap:6px;font-size:10px;color:#8a95a0;margin-top:2px}
+.clinical-empty{display:flex;flex-direction:column;align-items:flex-start;gap:10px;color:#68737f;padding:8px 0}
+.clinical-empty svg{color:#458a85}
+.clinical-empty p{font-size:12.5px;line-height:1.6;color:#68737f;margin:0}
+.disease-panel{position:absolute;right:30px;top:94px;width:330px;max-height:min(560px,calc(100dvh - 280px));border-radius:6px;padding:12px 18px 16px;z-index:20;display:flex;flex-direction:column}
+.disease-note{font-size:12px;line-height:1.6;color:#78838f;margin:10px 0 4px}
+.disease-list{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#b9c1c8 transparent}
+.disease-group h3{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#87929d;margin:14px 0 4px}
+.disease-group button{display:flex;justify-content:space-between;gap:10px;align-items:center;width:100%;text-align:left;font-size:13px;min-height:40px;padding:6px 4px;border-bottom:1px solid #1825360d;color:#3c4956}
+.disease-group button:hover{background:#458a850f;border-radius:4px}
+@media(max-width:767px){.disease-panel{top:161px;left:12px;right:12px;width:auto;z-index:40}.disease-list{max-height:calc(100dvh - 380px)}}
+
+/* Repertory matcher */
+.repertory-panel-wrap{position:absolute;right:30px;top:94px;width:350px;max-height:min(620px,calc(100dvh - 240px));border-radius:6px;padding:12px 18px 16px;z-index:20;display:flex;flex-direction:column}
+.repertory-panel{display:flex;flex-direction:column;gap:10px;min-height:0;flex:1}
+.repertory-input-wrap{display:flex;align-items:center;gap:9px;border:1px solid #18253620;border-radius:5px;padding:0 12px;margin-top:9px;background:#18253605}
+.repertory-input-wrap svg{color:#7b8793}
+.repertory-input{border:0;background:none;outline:none;font-size:14px;height:42px;width:100%;color:#26313c}
+.repertory-chips{display:flex;flex-wrap:wrap;gap:6px}
+.repertory-chips button{font-size:11px;padding:5px 10px;border:1px solid #1825361c;border-radius:99px;color:#65717e}
+.repertory-chips button:hover{border-color:#458a85;color:#3c5a60}
+.repertory-chips button.active{background:#458a85;color:#fff;border-color:#458a85}
+.repertory-count{font-size:12px;color:#78838f;margin:2px 0}
+.repertory-results{overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:9px;scrollbar-width:thin;scrollbar-color:#b9c1c8 transparent}
+.repertory-organ{font-size:11px;color:#87929d;margin:-2px 0 8px}
+
+/* Quiz mode */
+.clinical-intro-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.clinical-intro-actions{display:flex;align-items:center;gap:6px}
+.quiz-toggle{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:6px 11px;border:1px solid #1825361c;border-radius:99px;color:#5b6874}
+.quiz-toggle.active{background:#458a85;color:#fff;border-color:#458a85}
+.quiz-score{display:flex;align-items:center;gap:8px;font-size:12px;color:#3c5a60;font-weight:600;padding:10px 0}
+.quiz-score em{font-style:normal;font-weight:400;color:#87929d;margin-left:auto}
+.quiz-card{border:1px solid #18253614;border-radius:8px;padding:14px;background:#18253604}
+.quiz-pathology{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#458a85;font-weight:600;margin-bottom:8px}
+.quiz-question{font-size:14px;font-weight:600;color:#2b3a47;margin:0 0 10px}
+.quiz-reveal{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;font-size:13px;padding:11px;border:1px solid #458a8555;border-radius:6px;color:#3c5a60;margin-top:4px}
+.quiz-reveal:hover{background:#458a850f}
+.quiz-answer{margin-top:10px}
+.quiz-actions{display:flex;gap:8px;margin-top:10px}
+.quiz-actions button{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;font-size:12.5px;padding:10px;border-radius:6px;font-weight:500}
+.got-it{background:#3d7a5c;color:#fff}
+.missed-it{background:#a25b5b;color:#fff}
+.quiz-progress{font-size:10px;color:#87929d;margin:10px 0 0;text-align:center}
+
+/* Favorites */
+.fav-star{display:inline-flex;padding:6px;color:#9aa6b1}
+.fav-star.active{color:#d9a441}
+.fav-count{font-style:normal;font-size:10px;background:#458a85;color:#fff;border-radius:99px;padding:1px 6px;margin-left:2px}
+.favorites-empty{font-size:12.5px;line-height:1.6;color:#78838f;margin-top:10px}
+.fav-row{display:flex;align-items:center;gap:2px;margin:0 0 2px}
+.fav-row>button:first-child{flex:1}
+.fav-row svg{color:#d9a441}
+
+/* Ambient audio */
+.ambient-toggle{position:absolute;right:30px;bottom:54px;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#458a85;z-index:15}
+.ambient-widget{position:absolute;right:30px;bottom:54px;border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:4px;z-index:25;min-width:170px}
+.ambient-head{display:flex;align-items:center;justify-content:space-between;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#68737f;padding:2px 4px 6px}
+.ambient-head button{color:#7b8793;padding:4px}
+.ambient-widget>button{display:flex;align-items:center;gap:9px;font-size:13px;color:#3c4956;padding:9px 10px;border-radius:5px}
+.ambient-widget>button:hover{background:#18253608}
+.ambient-widget>button.active{background:#458a85;color:#fff}
+.ambient-widget em{font-style:normal;font-size:10px;margin-left:auto;color:#a25b5b}
+.ambient-widget .active em{color:#ffd9d9}
+.ambient-eq{display:flex;gap:2px;align-items:flex-end;height:12px;margin-left:auto}
+.ambient-eq b{width:2.5px;background:currentColor;animation:eq .9s ease-in-out infinite}
+.ambient-eq b:nth-child(2){animation-delay:.25s}.ambient-eq b:nth-child(3){animation-delay:.5s}
+@keyframes eq{0%,100%{height:3px}50%{height:12px}}
+@media(max-width:767px){.ambient-toggle,.ambient-widget{right:12px;bottom:calc(96px + env(safe-area-inset-bottom))}.repertory-panel-wrap{top:161px;left:12px;right:12px;width:auto;z-index:40}}
+
