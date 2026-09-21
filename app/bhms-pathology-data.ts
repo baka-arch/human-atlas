@@ -9,7 +9,36 @@ export interface Remedy {
   name: string;
   keynotes: string[];
   modalities: string;
+  /** Complementary/inimical/antidote relationships per Boericke. */
+  relationships?: {complementary?: string[]; inimical?: string[]; antidotes?: string[]};
 }
+
+// Classic remedy relationships from the Materia Medica (Boericke,
+// Relationships section) — high-yield viva material. Only the most
+// established pairs are listed; follow your college notes for disputed ones.
+export const REMEDY_RELATIONSHIPS: Record<string, NonNullable<Remedy['relationships']>> = {
+  'Nux Vomica': {complementary: ['Sulphur', 'Ignatia'], inimical: ['Coffea Cruda'], antidotes: ['Arsenicum Album', 'Camphor']},
+  'Arsenicum Album': {complementary: ['Phosphorus', 'Sulphur'], inimical: ['Hepar Sulphuris'], antidotes: ['Camphor', 'Hepar Sulphuris']},
+  'Antimonium Tartaricum': {complementary: ['Ipecacuanha'], inimical: ['Hepar Sulphuris'], antidotes: ['Camphor', 'Ipecacuanha']},
+  'Pulsatilla': {complementary: ['Sulphur', 'Kali Sulphuricum'], inimical: ['Coffea Cruda'], antidotes: ['Camphor', 'Aconitum Napellus']},
+  'Lycopodium': {complementary: ['Iodum', 'Sulphur', 'Arsenicum Album'], inimical: ['Coffea Cruda'], antidotes: ['Camphor', 'Pulsatilla']},
+  'Bryonia Alba': {complementary: ['Aconitum Napellus', 'Rhus Toxicodendron'], inimical: ['Phosphorus'], antidotes: ['Aconitum Napellus', 'Nux Vomica']},
+  'Belladonna': {complementary: ['Aconitum Napellus'], inimical: ['Mercurius Solubilis'], antidotes: ['Camphor']},
+  'Hepar Sulphuris': {complementary: ['Lachesis Mutus', 'Sulphur'], inimical: ['Arsenicum Album'], antidotes: ['Camphor', 'Hepar Sulphuris (low potency)']},
+  'Sulphur': {complementary: ['Aconitum Napellus', 'Nux Vomica', 'Calcarea Carbonica'], inimical: ['Kali Carbonicum'], antidotes: ['Aconitum Napellus', 'Nux Vomica', 'Calcarea Carbonica']},
+  'Ipecacuanha': {complementary: ['Arsenicum Album', 'China Officinalis'], inimical: [], antidotes: ['Arsenicum Album', 'Nux Vomica']},
+  'Sepia Officinalis': {complementary: ['Sulphur', 'Nitricum Acidum'], inimical: [], antidotes: ['Camphor', 'Aconitum Napellus']},
+  'Phosphorus': {complementary: ['Sulphur', 'Arsenicum Album'], inimical: ['Causticum'], antidotes: ['Camphor', 'Nux Vomica']},
+  'China Officinalis': {complementary: ['Ferrum Met', 'Calcarea Carbonica'], inimical: ['Quinine'], antidotes: ['Arsenicum Album', 'Ipecacuanha']},
+  'Rhus Toxicodendron': {complementary: ['Bryonia Alba', 'Calcarea Carbonica'], inimical: ['Mercurius Solubilis'], antidotes: ['Camphor']},
+  'Mercurius Solubilis': {complementary: ['Belladonna', 'Sulphur'], inimical: ['Silicea'], antidotes: ['Hepar Sulphuris', 'Sulphur']},
+  'Aconitum Napellus': {complementary: ['Belladonna', 'Sulphur'], inimical: ['Coffea Cruda'], antidotes: ['Nux Vomica', 'Camphor']},
+  'Calcarea Carbonica': {complementary: ['Sulphur', 'Lycopodium', 'Belladonna'], inimical: ['Kali Carbonicum', 'Mercurius Solubilis'], antidotes: ['Camphor', 'Nux Vomica']},
+  'Natrum Muriaticum': {complementary: ['Ignatia', 'Thuja'], inimical: [], antidotes: ['Camphor', 'Phosphorus']},
+  'Ignatia Amara': {complementary: ['Nux Vomica', 'Natrum Muriaticum'], inimical: ['Nux Vomica (in high potency)'], antidotes: ['Camphor', 'Nux Vomica']},
+  'Lachesis Mutus': {complementary: ['Sulphur'], inimical: ['Mercurius Solubilis'], antidotes: ['Camphor', 'Arsenicum Album']},
+};
+
 
 export interface Pathology {
   name: string;

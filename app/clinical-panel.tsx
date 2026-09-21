@@ -2,8 +2,19 @@ import {useMemo,useState} from 'react';
 import {BookOpen,Pill,Stethoscope,Star,Brain,Check,X,Eye} from 'lucide-react';
 import {Accordion,AccordionContent,AccordionItem,AccordionTrigger} from '@/components/ui/accordion';
 import {Badge} from '@/components/ui/badge';
-import {clinicalForOrgan,type Pathology} from './bhms-pathology-data';
+import {REMEDY_RELATIONSHIPS,clinicalForOrgan,type Pathology,type Remedy} from './bhms-pathology-data';
+import {allenRemedy} from './allen-remedies';
 import {isFavorite,toggleFavorite} from './favorites';
+
+function Relationships({remedy}:{remedy:Remedy}){
+ const r=REMEDY_RELATIONSHIPS[remedy.name];
+ const allen=allenRemedy(remedy.name);
+ if(!r&&!allen)return null;
+ return <div className="allen-block">
+  {r&&<div className="remedy-relationships">{([['Complementary',r.complementary],['Inimical',r.inimical],['Antidotes',r.antidotes]] as const).filter(([,list])=>list&&list.length>0).map(([label,list])=><p key={label}><span>{label}</span>{list!.join(' · ')}</p>)}</div>}
+  {allen&&<details className="allen-details"><summary>Allen's Keynotes ({allen.symptoms.length} symptoms)</summary><ul className="remedy-keynotes">{allen.symptoms.map(s=><li key={s.symptom}>{s.region!=='General'&&<b>{s.region}: </b>}{s.symptom}</li>)}</ul></details>}
+ </div>;
+}
 
 function StarButton({organ,pathology}:{organ:string;pathology?:string}){
  const key=`${organ}::${pathology??''}`;
@@ -56,6 +67,7 @@ export default function ClinicalPanel({organName}:{organName:string|undefined}){
        <div className="remedy-head"><Pill size={14}/><h4>{r.name}</h4></div>
        <ul className="remedy-keynotes">{r.keynotes.map(k=><li key={k}>{k}</li>)}</ul>
        <p className="remedy-modalities"><span>Modalities</span>{r.modalities}</p>
+       <Relationships remedy={r}/>
       </div>)}
      </div>
     </AccordionContent>

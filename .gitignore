@@ -8,6 +8,9 @@
 !.yarn/releases
 !.yarn/versions
 
+# apk dependencies
+apk/node_modules
+
 # testing
 /coverage
 

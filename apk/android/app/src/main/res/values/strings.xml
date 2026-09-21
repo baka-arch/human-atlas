@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Dr. Riya\'s BHMS Atlas</string>
+    <string name="title_activity_main">Dr. Riya\'s BHMS Atlas</string>
+    <string name="package_name">com.drriya.bhmsatlas</string>
+    <string name="custom_url_scheme">com.drriya.bhmsatlas</string>
+</resources>
