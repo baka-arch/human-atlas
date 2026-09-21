@@ -1,0 +1,15 @@
+{
+  "name": "Dr. Riya's BHMS 3D Atlas",
+  "short_name": "BHMS Atlas",
+  "description": "Interactive 3D anatomy with homeopathic pathology, remedies and materia medica — a BHMS clinical study companion.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f3f4f4",
+  "theme_color": "#f3f4f4",
+  "icons": [
+    {"src": "/favicon-180.png", "sizes": "180x180", "type": "image/png", "purpose": "any"},
+    {"src": "/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
