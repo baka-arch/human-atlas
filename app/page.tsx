@@ -44,7 +44,24 @@ export default function Home(){
  const chooseDisease=(organAliases:string[],organName:string)=>{const concept=atlas?.concepts.find(c=>{const n=c.name.toLowerCase();return organAliases.some(a=>n===a||n.includes(a));})??atlas?.concepts.find(c=>c.name.toLowerCase()===organName.toLowerCase());setChosen(concept??{id:`clinical:${organName.toLowerCase()}`,name:organName,elements:[]});setState(s=>({...s,selected:concept?concept.elements:[],isolate:false,rotate:false}));setDetailTab('clinical');setDetails(true);setPanel(null);};
  const jumpToOrgan=(organName:string)=>{const entry=BHMS_PATHOLOGY.find(e=>e.organ===organName);if(entry)chooseDisease(entry.aliases,entry.organ);};
  const toggle=(id:SystemId)=>{setDetails(false);setState(s=>({...s,selected:[],isolate:false,visible:s.visible.includes(id)?s.visible.filter(x=>x!==id):[...s.visible,id]}));};
- const reset=()=>{setState(s=>({...initial,visible:DEFAULT_VISIBLE,reset:s.reset+1}));setChosen(null);setDetails(false);setPanel(null);closeOverlays();};
+ const reset=()=>{setState(s=>({...initial,visible:DEFAULT_VISIBLE,reset:s.reset+1}));setChosen(null);setDetails(false);setAbout(false);setPanel(null);closeOverlays();};
+ const resetRef=useRef(reset);
+ resetRef.current=reset;
+ useEffect(()=>{
+  if(typeof window==='undefined')return;
+  try{window.history.pushState({atlas:'home'},'');}catch{}
+  const ensureHistory=()=>{try{window.history.pushState({atlas:'home'},'');}catch{}};
+  window.addEventListener('pointerdown',ensureHistory,{once:true});
+  const onPopState=()=>{
+   try{window.history.pushState({atlas:'home'},'');}catch{}
+   resetRef.current();
+  };
+  window.addEventListener('popstate',onPopState);
+  return()=>{
+   window.removeEventListener('pointerdown',ensureHistory);
+   window.removeEventListener('popstate',onPopState);
+  };
+ },[]);
  const openPanel=(next:'layers'|'search'|'diseases'|'repertory'|'remedies'|'favorites')=>{setDetails(false);setMenu(false);setViewsOpen(false);setPanel(p=>p===next?null:next);};
  const [menu,setMenu]=useState(false),[viewsOpen,setViewsOpen]=useState(false);
  const toolButton=(id:'diseases'|'repertory'|'remedies'|'favorites'|'search',label:string,icon:React.ReactNode,extra?:React.ReactNode)=><Button variant="ghost" className={panel===id?'active':''} onClick={()=>openPanel(id)}>{icon}<span>{label}</span>{extra}</Button>;
