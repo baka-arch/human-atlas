@@ -1,7 +1,7 @@
 import {flushSync} from 'react-dom';
 import {registerAtlasTools} from './agent-tools';
 import {useEffect,useMemo,useRef,useState} from 'react';
-import {Activity,ArrowUpRight,Camera,Check,ChevronRight,Ellipsis,Focus,Info,Layers3,Moon,Pause,Pill,RotateCcw,RotateCw,Search,Sparkles,Star,Stethoscope,Sun,Wifi,X} from 'lucide-react';
+import {Activity,ArrowUpRight,Camera,Check,ChevronRight,CircleOff,Disc,Ellipsis,Focus,Info,Layers3,Moon,Pause,Pill,RotateCcw,RotateCw,Search,Sparkles,Star,Stethoscope,Sun,Wifi,X} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import {Badge} from '@/components/ui/badge';
 import {Slider} from '@/components/ui/slider';
@@ -19,7 +19,7 @@ import AmbientAudio from './ambient-audio';
 import {BHMS_PATHOLOGY} from './bhms-pathology-data';
 import {useFavorites,toggleFavorite} from './favorites';
 import {DEFAULT_VISIBLE,SYSTEMS,EXPLANATIONS,explanation,type Atlas,type Concept,type SceneState,type SystemId,type View} from './anatomy';
-const initial:SceneState={explode:0,visible:DEFAULT_VISIBLE,selected:[],isolate:false,view:'three-quarter',rotate:false,reset:0};
+const initial:SceneState={explode:0,visible:DEFAULT_VISIBLE,selected:[],isolate:false,view:'three-quarter',rotate:false,reset:0,hidePlatform:false};
 const MODEL_URL='/models/atlas.json';
 export default function Home(){
  const detailTitle=useRef<HTMLHeadingElement>(null);
@@ -44,7 +44,7 @@ export default function Home(){
  const chooseDisease=(organAliases:string[],organName:string)=>{const concept=atlas?.concepts.find(c=>{const n=c.name.toLowerCase();return organAliases.some(a=>n===a||n.includes(a));})??atlas?.concepts.find(c=>c.name.toLowerCase()===organName.toLowerCase());setChosen(concept??{id:`clinical:${organName.toLowerCase()}`,name:organName,elements:[]});setState(s=>({...s,selected:concept?concept.elements:[],isolate:false,rotate:false}));setDetailTab('clinical');setDetails(true);setPanel(null);};
  const jumpToOrgan=(organName:string)=>{const entry=BHMS_PATHOLOGY.find(e=>e.organ===organName);if(entry)chooseDisease(entry.aliases,entry.organ);};
  const toggle=(id:SystemId)=>{setDetails(false);setState(s=>({...s,selected:[],isolate:false,visible:s.visible.includes(id)?s.visible.filter(x=>x!==id):[...s.visible,id]}));};
- const reset=()=>{setState(s=>({...initial,visible:DEFAULT_VISIBLE,reset:s.reset+1}));setChosen(null);setDetails(false);setAbout(false);setPanel(null);closeOverlays();};
+ const reset=()=>{setState(s=>({...initial,hidePlatform:s.hidePlatform,visible:DEFAULT_VISIBLE,reset:s.reset+1}));setChosen(null);setDetails(false);setAbout(false);setPanel(null);closeOverlays();};
  const resetRef=useRef(reset);
  resetRef.current=reset;
  useEffect(()=>{
@@ -80,7 +80,7 @@ export default function Home(){
   const s=await offlineStatus(atlas);
   setOffline({state:s,done:0,total:0});
  };
- const menuButtons=<><Button variant="ghost" className={panel==='diseases'?'active':''} onClick={()=>openPanel('diseases')} aria-label="Browse diseases"><Stethoscope size={18}/><span>Diseases</span></Button><Button variant="ghost" className={panel==='repertory'?'active':''} onClick={()=>openPanel('repertory')} aria-label="Repertory matcher"><Sparkles size={18}/><span>Repertory</span></Button><Button variant="ghost" className={panel==='remedies'?'active':''} onClick={()=>openPanel('remedies')} aria-label="Remedy index and compare"><Pill size={18}/><span>Remedies</span></Button><Button variant="ghost" className={panel==='favorites'?'active':''} onClick={()=>openPanel('favorites')} aria-label="Exam favorites"><Star size={18}/><span>Favorites{favorites.length>0&&<i className="fav-count">{favorites.length}</i>}</span></Button><Button variant="ghost" className={panel==='search'?'active':''} onClick={()=>openPanel('search')} aria-label="Search anatomy"><Search size={18}/><span>Find a structure</span><kbd>/</kbd></Button><Button variant="ghost" className="icon-button" aria-label={theme.night?'Switch to day theme':'Switch to night-study theme'} title={theme.night?'Day theme':'Night theme'} onClick={theme.toggle}>{theme.night?<Sun size={18}/>:<Moon size={18}/>}</Button><Button variant="ghost" className="icon-button" aria-label="About this atlas" onClick={()=>{setDetails(false);setPanel(null);setAbout(true);}}><Info size={18}/></Button></>;
+ const menuButtons=<><Button variant="ghost" className={panel==='diseases'?'active':''} onClick={()=>openPanel('diseases')} aria-label="Browse diseases"><Stethoscope size={18}/><span>Diseases</span></Button><Button variant="ghost" className={panel==='repertory'?'active':''} onClick={()=>openPanel('repertory')} aria-label="Repertory matcher"><Sparkles size={18}/><span>Repertory</span></Button><Button variant="ghost" className={panel==='remedies'?'active':''} onClick={()=>openPanel('remedies')} aria-label="Remedy index and compare"><Pill size={18}/><span>Remedies</span></Button><Button variant="ghost" className={panel==='favorites'?'active':''} onClick={()=>openPanel('favorites')} aria-label="Exam favorites"><Star size={18}/><span>Favorites{favorites.length>0&&<i className="fav-count">{favorites.length}</i>}</span></Button><Button variant="ghost" className={panel==='search'?'active':''} onClick={()=>openPanel('search')} aria-label="Search anatomy"><Search size={18}/><span>Find a structure</span><kbd>/</kbd></Button><Button variant="ghost" className={`icon-button desktop-only ${state.hidePlatform?'active':''}`} aria-label={state.hidePlatform?'Show standing platform':'Hide standing platform'} title={state.hidePlatform?'Show standing platform':'Hide standing platform'} onClick={()=>setState(s=>({...s,hidePlatform:!s.hidePlatform}))}>{state.hidePlatform?<Disc size={18}/>:<CircleOff size={18}/>}</Button><Button variant="ghost" className="icon-button" aria-label={theme.night?'Switch to day theme':'Switch to night-study theme'} title={theme.night?'Day theme':'Night theme'} onClick={theme.toggle}>{theme.night?<Sun size={18}/>:<Moon size={18}/>}</Button><Button variant="ghost" className="icon-button" aria-label="About this atlas" onClick={()=>{setDetails(false);setPanel(null);setAbout(true);}}><Info size={18}/></Button></>;
  return <main className="studio">
   {atlas&&<AnatomyScene atlas={atlas} state={{...state,inspectorOpen:details&&!!chosen}} onSelect={choosePart} onProgress={n=>{setProgress(n);if(n===100)setError('');}} onError={setError}/>}
   <div className="vignette"/>
@@ -100,6 +100,10 @@ export default function Home(){
      {offline.state==='available'&&<div className="offline-row ready"><Check size={16}/>Ready for offline use</div>}
      {offline.state==='downloading'&&<div className="offline-row busy"><span className="loading-track"><i style={{width:`${offline.total?Math.round(offline.done/offline.total*100):0}%`}}/></span>{offline.done}/{offline.total} downloading…</div>}
      {(offline.state==='partial'||offline.state==='missing')&&atlas&&(swControlled?<Button variant="ghost" role="menuitem" onClick={startOfflineDownload}><Wifi size={16}/><span>Download for offline{offline.state==='partial'?' (finish)':''} · ≈{estimateMb(atlas)} MB</span></Button>:<div className="offline-row"><Wifi size={16}/>Offline works after installing the app (deploy or preview build)</div>)}
+      <Button variant="ghost" role="menuitem" className={state.hidePlatform?'active':''} onClick={()=>{setState(s=>({...s,hidePlatform:!s.hidePlatform}));setMenu(false);}} aria-label={state.hidePlatform?'Show standing platform':'Hide standing platform'}>
+       {state.hidePlatform?<Disc size={18}/>:<CircleOff size={18}/>}
+       <span>{state.hidePlatform?'Show standing platform':'Hide standing platform'}</span>
+      </Button>
      {menuButtons}
     </div>}
    </div>
