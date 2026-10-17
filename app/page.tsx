@@ -72,6 +72,9 @@ export default function Home(){
   <nav className="top-actions" aria-label="Explorer panels">
    <div className="desktop-tools">{menuButtons}</div>
    <div className="mobile-tools">
+    <Button variant="ghost" className={`icon-button search-trigger ${panel==='search'?'active':''}`} aria-label="Search anatomy" title="Search anatomy" onClick={()=>openPanel('search')}>
+     <Search size={18}/>
+    </Button>
     <Button variant="ghost" className={`icon-button menu-trigger ${menu?'active':''}`} aria-haspopup="menu" aria-expanded={menu} aria-label="Study tools menu" title="Study tools" onClick={()=>{setMenu(m=>!m);setViewsOpen(false);}}>
      <Ellipsis size={18}/>
      {favorites.length>0&&<i className="fav-count">{favorites.length}</i>}
